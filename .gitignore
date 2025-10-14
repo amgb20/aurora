@@ -71,4 +71,4 @@ htmlcov/
 *.m4z
 
 # Potential large files
-
+docs/

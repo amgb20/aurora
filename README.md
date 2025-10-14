@@ -195,11 +195,24 @@ curl -X POST "http://localhost:8000/transcribe_with_speakers" \
 
 ### Features
 
-- 🎙️ Automatic speaker detection (up to 2 speakers)
+- 🎙️ Automatic speaker detection with optional `num_speakers` / `min_speakers` / `max_speakers`
 - 🏷️ Speaker labeling and name mapping
 - ⏱️ Word-level speaker attribution with timestamps
 - 📊 Speaker statistics (speaking time, turns)
-- 📝 Multiple output formats (JSON, TXT, SRT)
+- 📝 Prettified JSON output saved to `outputs/diarized_transcripts/` plus optional TXT/SRT formatters
+
+### Where it fits in the pipeline
+
+1. **Transcription (`app/services/transcription.py`)** – Whisper (OpenAI) generates the verbatim transcript with word-level timestamps and confidences.
+2. **Diarization (`app/services/diarization.py`)** – pyannote’s `speaker-diarization-3.1` pipeline segments the audio into speaker turns, honouring any speaker-count hints you pass to the endpoint.
+3. **Alignment & Stats** – Each Whisper token is matched to the diarization window to attach the correct speaker label, producing `words_with_speakers` plus aggregate metrics.
+4. **API response (`app/main.py`)** – The `/transcribe_with_speakers` endpoint packages the structured result and also writes a readable JSON snapshot to `outputs/diarized_transcripts/<filename>.json` for later review.
+
+```
+Audio file ➜ Whisper transcript ➜ Pyannote speaker turns ➜ Aligned words + stats ➜ FastAPI response + saved JSON
+```
+
+The diagrams and a deeper walkthrough live in [SPEAKER_DIARIZATION_IMPLEMENTATION.md](SPEAKER_DIARIZATION_IMPLEMENTATION.md) and [SPEAKER_DIARIZATION.md](SPEAKER_DIARIZATION.md).
 
 ### Example Response
 
@@ -415,4 +428,3 @@ This project is for educational and interview purposes.
 ## 👤 Author
 
 Built as part of the ML Interview Take-Home Assessment.
-

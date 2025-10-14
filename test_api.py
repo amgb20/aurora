@@ -10,7 +10,9 @@ import sys
 from pathlib import Path
 
 BASE_URL = "http://localhost:8000"
-AUDIO_FILE = "Is Mars the Future of Humanity？ Joe Rogan Asks Elon Musk 2.wav"
+AUDIO_DIR = Path("audio")
+AUDIO_FILENAME = "Is Mars the Future of Humanity？ Joe Rogan Asks Elon Musk 2.wav"
+AUDIO_FILE = AUDIO_DIR / AUDIO_FILENAME
 
 
 def test_health_check():
@@ -31,13 +33,13 @@ def test_transcribe():
     """Test the transcription endpoint."""
     print("Testing transcription endpoint...")
     
-    if not Path(AUDIO_FILE).exists():
+    if not AUDIO_FILE.exists():
         print(f"❌ Audio file not found: {AUDIO_FILE}")
-        print(f"   Please ensure the audio file is in the current directory\n")
+        print(f"   Please ensure the audio file is located in the 'audio' directory\n")
         return False
     
     try:
-        with open(AUDIO_FILE, "rb") as audio:
+        with AUDIO_FILE.open("rb") as audio:
             files = {"audio": audio}
             response = requests.post(f"{BASE_URL}/transcribe", files=files)
             response.raise_for_status()
@@ -57,12 +59,12 @@ def test_summarise():
     """Test the summarization endpoint."""
     print("Testing summarization endpoint...")
     
-    if not Path(AUDIO_FILE).exists():
+    if not AUDIO_FILE.exists():
         print(f"❌ Audio file not found: {AUDIO_FILE}\n")
         return False
     
     try:
-        with open(AUDIO_FILE, "rb") as audio:
+        with AUDIO_FILE.open("rb") as audio:
             files = {"audio": audio}
             data = {"extract_cues": "true"}
             response = requests.post(f"{BASE_URL}/summarise", files=files, data=data)
@@ -95,12 +97,12 @@ def test_match():
     """Test the compatibility matching endpoint."""
     print("Testing compatibility matching endpoint...")
     
-    if not Path(AUDIO_FILE).exists():
+    if not AUDIO_FILE.exists():
         print(f"❌ Audio file not found: {AUDIO_FILE}\n")
         return False
     
     try:
-        with open(AUDIO_FILE, "rb") as audio:
+        with AUDIO_FILE.open("rb") as audio:
             files = {"audio": audio}
             response = requests.post(f"{BASE_URL}/match", files=files)
             response.raise_for_status()
@@ -169,4 +171,3 @@ def main():
 
 if __name__ == "__main__":
     sys.exit(main())
-
