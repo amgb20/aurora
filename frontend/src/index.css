@@ -1,0 +1,79 @@
+@import "tailwindcss";
+
+@layer base {
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 224 36% 12%;
+    --card: 0 0% 100%;
+    --card-foreground: 224 36% 16%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 224 36% 16%;
+    --primary: 228 89% 60%;
+    --primary-foreground: 210 40% 98%;
+    --secondary: 210 20% 96%;
+    --secondary-foreground: 222 47% 20%;
+    --muted: 210 45% 96%;
+    --muted-foreground: 215 22% 44%;
+    --accent: 189 86% 88%;
+    --accent-foreground: 222 47% 20%;
+    --destructive: 2 84% 63%;
+    --destructive-foreground: 210 40% 98%;
+    --border: 210 50% 92%;
+    --input: 210 50% 92%;
+    --ring: 228 89% 64%;
+    --radius: 0.5rem;
+  }
+ 
+  .dark {
+    --background: 224 32% 12%;
+    --foreground: 210 40% 96%;
+    --card: 224 32% 18%;
+    --card-foreground: 210 40% 96%;
+    --popover: 224 32% 18%;
+    --popover-foreground: 210 40% 96%;
+    --primary: 228 89% 68%;
+    --primary-foreground: 222 47% 11%;
+    --secondary: 225 35% 20%;
+    --secondary-foreground: 210 40% 96%;
+    --muted: 225 35% 20%;
+    --muted-foreground: 215 20% 70%;
+    --accent: 225 35% 20%;
+    --accent-foreground: 210 40% 96%;
+    --destructive: 0 65% 40%;
+    --destructive-foreground: 210 40% 98%;
+    --border: 224 28% 24%;
+    --input: 224 28% 24%;
+    --ring: 228 89% 68%;
+  }
+}
+
+body {
+  margin: 0;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background-color: white;
+  color: #1a202c;
+}
+
+html {
+  background-color: white;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+/* Force light mode - disable dark mode */
+.dark {
+  display: none;
+}
+
+html.dark {
+  background-color: white !important;
+}
+
+html.dark body {
+  background-color: white !important;
+  color: #1a202c !important;
+}

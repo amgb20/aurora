@@ -19,7 +19,7 @@ wheels/
 *.egg-info/
 .installed.cfg
 *.egg
-MANIFEST
+MANIFEST` `
 
 # Virtual environments
 venv/
@@ -72,3 +72,10 @@ htmlcov/
 
 # Potential large files
 docs/
+.cursor/plans/
+
+# Frontend
+frontend/node_modules/
+frontend/dist/
+frontend/.env
+frontend/.env.local
